@@ -1,0 +1,18 @@
+{
+  "name": "Same Frequency",
+  "description": "Compare public playlists with a friend and see how much music you have in common.",
+  "preview": "preview.png",
+  "main": "same-frequency.js",
+  "readme": "README.md",
+  "authors": [
+    {
+      "name": "Shahisha1",
+      "url": "https://github.com/Shahisha1"
+    }
+  ],
+  "tags": [
+    "music",
+    "playlists",
+    "friends"
+  ]
+}
