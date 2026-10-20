@@ -2,6 +2,8 @@
 
 # Same Frequency
 
+**[LOGO PLACEHOLDER — put the logo here]**
+
 **How much music do you and a friend have in common?**
 
 Compare the artists and tracks in your public Spotify playlists with a friend's.
@@ -24,6 +26,26 @@ Compare the artists and tracks in your public Spotify playlists with a friend's.
 | **What it can't see** | Private playlists or anyone's listening history         |
 
 > **New to Spicetify?** Start with the [Spicetify installation guide](https://spicetify.app/docs/installation/). This extension needs Spicetify; it doesn't run in Spotify's web player or mobile app.
+
+## Preview
+
+### Profile button
+
+The comparison button appears on a friend's profile, above their public playlists.
+
+![Same Frequency compare our playlists button on a Spotify profile](preview/button.png)
+
+### Playlist comparison in progress
+
+The extension checks the public playlists it can read and shows a loading status.
+
+![Same Frequency checking public playlists](preview/loading.png)
+
+### Comparison results
+
+See the overlap score and examples of artists and tracks found in both playlists.
+
+![Same Frequency playlist comparison results](preview/result.png)
 
 ## Use it
 

@@ -67,65 +67,23 @@
     style.id = "vibe-check-styles";
     style.textContent = `
       .vibe-check-root {
+        --sf-ink: #1f1650;
+        --sf-aqua: #7df3ff;
+        --sf-cyan: #19b5da;
+        --sf-pink: #ff4fd8;
+        --sf-lilac: #c9b6ff;
         box-sizing: border-box;
         width: min(640px, 100%);
         max-width: 100%;
         min-width: 0;
         overflow-x: hidden;
-        color: #302b26;
-        font-family: inherit;
+        container-type: inline-size;
+        padding: 2px 7px 7px 2px;
+        color: var(--sf-ink);
+        font-family: Tahoma, Verdana, "Trebuchet MS", sans-serif;
       }
 
-      .vibe-check-intro,
-      .vibe-check-status {
-        margin-bottom: 14px;
-        padding: 10px 0;
-      }
-
-      .vibe-check-intro-title {
-        color: #a4513b;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-      }
-
-      .vibe-check-intro-copy {
-        margin-top: 6px;
-        color: #6b6259;
-        font-size: 13px;
-        line-height: 1.5;
-      }
-
-      .vibe-check-status {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        min-height: 28px;
-        margin: 0;
-        padding: 5px 0;
-        border: 0;
-        background: transparent;
-        color: #625950;
-        font-size: 12px;
-      }
-
-      .vibe-check-loader {
-        display: block;
-        flex: 0 0 auto;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #b85f43;
-      }
-
-      .vibe-check-status.is-error {
-        color: #a33f34;
-      }
-
-      .vibe-check-status.is-error .vibe-check-loader {
-        display: none;
-      }
+      /* ---------- one continuous window ---------- */
 
       .vibe-check-result {
         box-sizing: border-box;
@@ -133,64 +91,258 @@
         max-width: 100%;
         min-width: 0;
         overflow: hidden;
-        border: 1px solid #d9ccbb;
-        border-radius: 5px;
-        background: #f4eee4;
+        border: 2px solid var(--sf-ink);
+        border-radius: 16px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, .75) 0, rgba(255, 255, 255, 0) 150px),
+          repeating-linear-gradient(0deg, rgba(25, 181, 218, .14) 0 1px, transparent 1px 16px),
+          repeating-linear-gradient(90deg, rgba(25, 181, 218, .14) 0 1px, transparent 1px 16px),
+          linear-gradient(165deg, #b9f3ff 0%, #d9ccff 50%, #ffc5f3 100%);
+        box-shadow: 5px 5px 0 var(--sf-pink);
+      }
+
+      .vibe-check-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 6px 8px 6px 14px;
+        background: linear-gradient(90deg, #2a3cff 0%, #8a4dff 55%, #ff4fd8 100%);
+        color: #fff;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-shadow: 1px 1px 0 rgba(31, 22, 80, .7);
+      }
+
+      .vibe-check-titlebar-btns {
+        display: flex;
+        gap: 4px;
+      }
+
+      .vibe-check-winbtn {
+        display: grid;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        place-items: center;
+        border: 1px solid var(--sf-ink);
+        border-radius: 50%;
+        background: linear-gradient(180deg, #ffffff 0%, #c9d4f5 100%);
+        color: var(--sf-ink);
+        cursor: pointer;
+        font-family: Tahoma, Verdana, sans-serif;
+        font-size: 11px;
+        font-weight: 900;
+        line-height: 1;
+        text-shadow: none;
+      }
+
+      .vibe-check-winbtn:hover {
+        background: linear-gradient(180deg, #d6fbff 0%, #7df3ff 100%);
+      }
+
+      .vibe-check-winbtn:last-child:hover {
+        background: linear-gradient(180deg, #ffe0fa 0%, #ff4fd8 100%);
+        color: #fff;
+      }
+
+      .vibe-check-winbtn:active {
+        transform: translateY(1px);
+      }
+
+      .vibe-check-winbtn:focus-visible {
+        outline: 2px dashed #fff;
+        outline-offset: 2px;
+      }
+
+      /* rolled up: only the title bar stays */
+
+      .vibe-check-result.is-collapsed .vibe-check-hero,
+      .vibe-check-result.is-collapsed .vibe-check-lists {
+        display: none;
+      }
+
+      /* our window has its own close button, so hide Spotify's modal header */
+
+      .main-trackCreditsModal-container:has(.vibe-check-root) .main-trackCreditsModal-header {
+        display: none;
       }
 
       .vibe-check-hero {
-        padding: 22px 24px 19px;
-        background: #eee4d5;
-        color: #302b26;
+        position: relative;
+        padding: 18px 24px 8px;
+        color: var(--sf-ink);
       }
 
       .vibe-check-kicker {
-        font-size: 10px;
+        display: inline-block;
+        padding: 2px 10px;
+        border: 1px solid var(--sf-ink);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .8);
+        font-family: "Courier New", monospace;
+        font-size: 11px;
         font-weight: 700;
-        letter-spacing: .13em;
+        letter-spacing: .14em;
         text-transform: uppercase;
-        color: #a4513b;
+      }
+
+      .vibe-check-sticker {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        display: grid;
+        width: 74px;
+        height: 74px;
+        place-items: center;
+        padding: 10px;
+        box-sizing: border-box;
+        background: #ffe14f;
+        clip-path: polygon(50.0% 0.0%, 57.4% 12.7%, 69.1% 3.8%, 71.1% 18.4%, 85.4% 14.6%, 81.6% 28.9%, 96.2% 30.9%, 87.3% 42.6%, 100.0% 50.0%, 87.3% 57.4%, 96.2% 69.1%, 81.6% 71.1%, 85.4% 85.4%, 71.1% 81.6%, 69.1% 96.2%, 57.4% 87.3%, 50.0% 100.0%, 42.6% 87.3%, 30.9% 96.2%, 28.9% 81.6%, 14.6% 85.4%, 18.4% 71.1%, 3.8% 69.1%, 12.7% 57.4%, 0.0% 50.0%, 12.7% 42.6%, 3.8% 30.9%, 18.4% 28.9%, 14.6% 14.6%, 28.9% 18.4%, 30.9% 3.8%, 42.6% 12.7%);
+        font-family: "Arial Black", Impact, sans-serif;
+        font-size: 11px;
+        font-style: italic;
+        line-height: 1;
+        text-align: center;
+        text-transform: uppercase;
+        transform: rotate(14deg);
       }
 
       .vibe-check-score-row {
         display: flex;
         align-items: baseline;
-        gap: 11px;
-        margin-top: 7px;
+        gap: 12px;
+        margin-top: 10px;
       }
 
       .vibe-check-score {
-        color: #a4513b;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(48px, 12vw, 62px);
-        font-weight: 400;
-        letter-spacing: -.07em;
-        line-height: .95;
+        background: linear-gradient(180deg, #ffffff 0%, #bfefff 38%, #6f8cff 50%, #ff7be6 51%, #ffd1f6 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 2px var(--sf-ink);
+        paint-order: stroke fill;
+        filter: drop-shadow(3px 3px 0 var(--sf-ink));
+        font-family: "Arial Black", Impact, Verdana, sans-serif;
+        font-size: clamp(50px, 12vw, 68px);
+        font-style: italic;
+        font-weight: 900;
+        letter-spacing: -.03em;
+        line-height: 1;
       }
 
       .vibe-check-score-copy {
-        max-width: 240px;
-        color: #4d453e;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 19px;
-        font-weight: 400;
-        line-height: 1.25;
+        max-width: 200px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        line-height: 1.3;
+        text-transform: uppercase;
       }
 
-      .vibe-check-summary {
-        margin-top: 9px;
-        color: #6b6259;
+      .vibe-check-meter {
+        box-sizing: border-box;
+        height: 20px;
+        margin-top: 14px;
+        padding: 2px;
+        border: 2px solid var(--sf-ink);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .9);
+        overflow: hidden;
+      }
+
+      .vibe-check-meter-fill {
+        width: 0;
+        height: 100%;
+        background: repeating-linear-gradient(90deg, #19b5da 0 9px, transparent 9px 12px);
+        box-shadow: inset 0 -6px 0 rgba(255, 79, 216, .55);
+        transition: width .7s steps(12);
+      }
+
+      .vibe-check-status {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-height: 20px;
+        margin-top: 11px;
+        color: var(--sf-ink);
+        font-family: "Courier New", monospace;
         font-size: 12px;
+        font-weight: 700;
         line-height: 1.45;
       }
 
+      .vibe-check-loader {
+        display: block;
+        flex: 0 0 auto;
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--sf-ink);
+        background: var(--sf-pink);
+        animation: vibe-check-blink .9s steps(2, jump-none) infinite;
+      }
+
       .vibe-check-score-note {
-        padding: 11px 24px;
-        border-top: 1px solid #ded2c2;
-        color: #74695f;
+        margin-top: 4px;
+        color: #4a4f86;
         font-size: 11px;
         line-height: 1.5;
       }
+
+      /* loading: the same window, just scanning */
+
+      .vibe-check-result.is-loading .vibe-check-meter-fill {
+        width: 28%;
+        animation: vibe-check-scan 1.3s steps(14, jump-none) infinite alternate;
+      }
+
+      .vibe-check-result.is-loading .vibe-check-score {
+        animation: vibe-check-pulse 1s steps(2, jump-none) infinite;
+      }
+
+      @keyframes vibe-check-scan {
+        from { margin-left: 0; }
+        to { margin-left: 72%; }
+      }
+
+      @keyframes vibe-check-pulse {
+        from { opacity: 1; }
+        to { opacity: .45; }
+      }
+
+      @keyframes vibe-check-blink {
+        from { background: var(--sf-pink); }
+        to { background: var(--sf-aqua); }
+      }
+
+      /* error: same window, no scanning */
+
+      .vibe-check-result.is-error .vibe-check-loader {
+        display: none;
+      }
+
+      .vibe-check-result.is-error .vibe-check-status {
+        color: #b0002f;
+      }
+
+      .vibe-check-result.is-error .vibe-check-status::before {
+        content: "!";
+        display: grid;
+        flex: 0 0 auto;
+        width: 16px;
+        height: 16px;
+        place-items: center;
+        border: 1px solid var(--sf-ink);
+        border-radius: 50%;
+        background: #ffd24f;
+        color: var(--sf-ink);
+        font-weight: 900;
+      }
+
+      /* ---------- lists flow straight out of the hero ---------- */
 
       .vibe-check-lists {
         display: grid;
@@ -199,11 +351,55 @@
         max-width: 100%;
         min-width: 0;
         gap: 20px;
-        padding: 17px 20px 21px;
+        padding: 14px 24px 24px;
+      }
+
+      .vibe-check-lists:empty {
+        display: none;
       }
 
       .vibe-check-lists > section {
         min-width: 0;
+      }
+
+      .vibe-check-list-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding-bottom: 6px;
+        border-bottom: 2px dotted rgba(31, 22, 80, .4);
+        font-family: "Arial Black", Impact, Verdana, sans-serif;
+        font-size: 12px;
+        font-style: italic;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+      }
+
+      .vibe-check-list-heading > span:first-child::before {
+        content: "✶";
+        margin-right: 6px;
+        color: var(--sf-pink);
+      }
+
+      .vibe-check-count {
+        padding: 1px 9px;
+        border: 1px solid var(--sf-ink);
+        border-radius: 999px;
+        background: var(--sf-pink);
+        color: #fff;
+        font-family: Tahoma, Verdana, sans-serif;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-shadow: 1px 1px 0 var(--sf-ink);
+        text-transform: none;
+      }
+
+      .vibe-check-count:empty {
+        display: none;
       }
 
       .vibe-check-card-grid {
@@ -212,16 +408,19 @@
         width: 100%;
         max-width: 100%;
         min-width: 0;
-        overflow: hidden;
         grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 12px;
+        gap: 14px;
+        padding: 2px 4px 6px 0;
       }
 
       .vibe-check-media-card {
         min-width: 0;
-        overflow: hidden;
-        border: 0;
         background: transparent;
+        transition: transform .12s steps(3);
+      }
+
+      .vibe-check-media-card:hover {
+        transform: translateY(-3px);
       }
 
       .vibe-check-media-image,
@@ -231,47 +430,66 @@
         width: 100%;
         aspect-ratio: 1;
         object-fit: cover;
-        background: #e2d7c8;
+        border: 3px solid #fff;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 0 0 1.5px var(--sf-ink), 3px 3px 0 1.5px var(--sf-ink);
+      }
+
+      .vibe-check-media-card:hover .vibe-check-media-image,
+      .vibe-check-media-card:hover .vibe-check-media-placeholder {
+        box-shadow: 0 0 0 1.5px var(--sf-ink), 3px 3px 0 1.5px var(--sf-pink);
       }
 
       .vibe-check-media-placeholder {
         display: grid;
         place-items: center;
         padding: 8px;
-        color: #766b60;
+        background: repeating-linear-gradient(45deg, #e8ecfb 0 6px, #d3dbf5 6px 12px);
+        color: #4a4f86;
+        font-family: "Courier New", monospace;
         font-size: 10px;
         text-align: center;
       }
 
       .vibe-check-media-name {
         overflow: hidden;
-        padding: 7px 1px 0;
-        color: #39332e;
+        margin-top: 8px;
+        color: var(--sf-ink);
         font-size: 11px;
-        line-height: 1.35;
+        font-weight: 700;
+        line-height: 1.3;
+        text-align: center;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
-      @media (max-width: 700px) {
+      .vibe-check-empty {
+        color: #4a4f86;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+      }
+
+      @container (max-width: 520px) {
         .vibe-check-card-grid {
           grid-template-columns: repeat(4, minmax(0, 1fr));
         }
       }
 
-      @media (max-width: 420px) {
+      @container (max-width: 420px) {
         .vibe-check-hero {
-          padding: 19px 17px 16px;
+          padding: 16px 17px 8px;
         }
 
-        .vibe-check-score-note {
-          padding-right: 17px;
-          padding-left: 17px;
+        .vibe-check-sticker {
+          width: 60px;
+          height: 60px;
+          font-size: 9px;
         }
 
         .vibe-check-lists {
-          padding-right: 15px;
-          padding-left: 15px;
+          padding-right: 17px;
+          padding-left: 17px;
         }
 
         .vibe-check-card-grid {
@@ -279,57 +497,51 @@
         }
       }
 
-      .vibe-check-list-heading {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 10px;
-        padding-bottom: 7px;
-        border-bottom: 1px solid #ded2c2;
-        color: #39332e;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 16px;
-        font-weight: 400;
-      }
-
-      .vibe-check-count {
-        color: #81766b;
-        font-family: inherit;
-        font-size: 10px;
-        font-weight: 500;
-      }
-
-      .vibe-check-empty {
-        color: #766b60;
-        font-size: 12px;
-      }
+      /* ---------- the glossy gel button ---------- */
 
       .vibe-check-button {
-        border: 1px solid #a4513b;
-        border-radius: 4px;
-        background: #a4513b;
-        color: #fff8ef;
+        border: 1px solid #0b6f93;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #d6fbff 0%, #6fe0f5 48%, #19b5da 52%, #8af2ff 100%);
+        box-shadow:
+          inset 0 1px 0 #fff,
+          inset 0 -2px 3px rgba(0, 80, 120, .35),
+          0 2px 0 #0b6f93;
+        color: #06344a;
         cursor: pointer;
-        font: inherit;
+        font-family: Tahoma, Verdana, sans-serif;
         font-size: 13px;
-        font-weight: 600;
-        transition: background-color .15s ease, border-color .15s ease;
+        font-weight: 700;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+        transition: filter .12s ease;
       }
 
       .vibe-check-button:hover {
-        border-color: #873f30;
-        background: #873f30;
+        border-color: #a0108a;
+        background: linear-gradient(180deg, #ffe0fa 0%, #ff8fe8 48%, #f230c8 52%, #ffa6ee 100%);
+        color: #4a0040;
+      }
+
+      .vibe-check-button:active {
+        filter: brightness(.94);
       }
 
       .vibe-check-button:focus-visible {
-        outline: 2px solid #a4513b;
+        outline: 2px dashed #ff4fd8;
         outline-offset: 3px;
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .vibe-check-button {
+        .vibe-check-button,
+        .vibe-check-media-card,
+        .vibe-check-meter-fill {
           transition: none;
+        }
+
+        .vibe-check-loader,
+        .vibe-check-result.is-loading .vibe-check-meter-fill,
+        .vibe-check-result.is-loading .vibe-check-score {
+          animation: none;
         }
       }
     `;
@@ -409,11 +621,12 @@
   }
 
   function imageUrl(source) {
-    const values = typeof source === "string"
-      ? [source]
-      : source
-        ? [source.url, source.uri]
-        : [];
+    const values =
+      typeof source === "string"
+        ? [source]
+        : source
+          ? [source.url, source.uri]
+          : [];
     for (const value of values) {
       if (typeof value !== "string") continue;
       if (/^https?:\/\//i.test(value)) return value;
@@ -458,7 +671,11 @@
     const sources = [
       ...imageSources(album.images),
       ...imageSources(album.coverArt && album.coverArt.sources),
-      ...imageSources(t.albumOfTrack && t.albumOfTrack.coverArt && t.albumOfTrack.coverArt.sources),
+      ...imageSources(
+        t.albumOfTrack &&
+          t.albumOfTrack.coverArt &&
+          t.albumOfTrack.coverArt.sources,
+      ),
       ...imageSources(t.images),
       metadata.image_xlarge_url,
       metadata.image_large_url,
@@ -528,16 +745,13 @@
     for (const list of lists) {
       for (const t of list) {
         if (!tracks.has(t.uri)) {
-          tracks.set(
-            t.uri,
-            {
-              key: t.uri,
-              name: t.name + (t.artists[0] ? " - " + t.artists[0].name : ""),
-              imageUrl: t.imageUrl,
-              imageUrls: t.imageUrls,
-              artistKeys: t.artists.map((artist) => artist.key),
-            },
-          );
+          tracks.set(t.uri, {
+            key: t.uri,
+            name: t.name + (t.artists[0] ? " - " + t.artists[0].name : ""),
+            imageUrl: t.imageUrl,
+            imageUrls: t.imageUrls,
+            artistKeys: t.artists.map((artist) => artist.key),
+          });
         }
         for (const a of t.artists) {
           const current = artists.get(a.key);
@@ -546,7 +760,10 @@
             fallbackImageUrl: t.imageUrl || null,
             fallbackImageUrls: t.imageUrls || [],
           };
-          if (!current || (!current.fallbackImageUrl && artist.fallbackImageUrl)) {
+          if (
+            !current ||
+            (!current.fallbackImageUrl && artist.fallbackImageUrl)
+          ) {
             artists.set(a.key, artist);
           }
         }
@@ -586,15 +803,15 @@
 
   const artistImageCache = new Map();
   function artistImageSources(artist) {
-    const union = artist && (
-      artist.artistUnion ||
-      (artist.data && artist.data.artistUnion)
-    );
+    const union =
+      artist &&
+      (artist.artistUnion || (artist.data && artist.data.artistUnion));
     const profile = artist && artist.profile;
     const unionProfile = union && union.profile;
     const visuals = (artist && artist.visuals) || (union && union.visuals);
     const avatar = visuals && visuals.avatarImage;
-    const portrait = (profile && profile.portrait) ||
+    const portrait =
+      (profile && profile.portrait) ||
       (unionProfile && unionProfile.portrait) ||
       (artist && artist.portrait);
     const candidates = [
@@ -638,7 +855,11 @@
         }
         image = artistImageSources(artist).map(imageUrl).find(Boolean) || null;
       } catch (error) {
-        console.warn("[Same Frequency] Internal artist lookup failed:", item.name, error);
+        console.warn(
+          "[Same Frequency] Internal artist lookup failed:",
+          item.name,
+          error,
+        );
       }
 
       if (!image && spotifyId) {
@@ -650,9 +871,14 @@
             STEP_TIMEOUT,
             "artist metadata",
           );
-          image = artistImageSources(artist).map(imageUrl).find(Boolean) || null;
+          image =
+            artistImageSources(artist).map(imageUrl).find(Boolean) || null;
         } catch (error) {
-          console.warn("[Same Frequency] Could not load artist metadata:", item.name, error);
+          console.warn(
+            "[Same Frequency] Could not load artist metadata:",
+            item.name,
+            error,
+          );
         }
       }
 
@@ -661,18 +887,27 @@
           const query = encodeURIComponent('artist:"' + item.name + '"');
           const response = await withTimeout(
             Spicetify.CosmosAsync.get(
-              "https://api.spotify.com/v1/search?q=" + query + "&type=artist&limit=5",
+              "https://api.spotify.com/v1/search?q=" +
+                query +
+                "&type=artist&limit=5",
             ),
             STEP_TIMEOUT,
             "artist image search",
           );
-          const matches = (response && response.artists && response.artists.items) || [];
+          const matches =
+            (response && response.artists && response.artists.items) || [];
           const match = matches.find(
-            (candidate) => candidate.name.toLowerCase() === item.name.toLowerCase(),
+            (candidate) =>
+              candidate.name.toLowerCase() === item.name.toLowerCase(),
           );
-          image = (match && (match.images || []).map(imageUrl).find(Boolean)) || null;
+          image =
+            (match && (match.images || []).map(imageUrl).find(Boolean)) || null;
         } catch (error) {
-          console.warn("[Same Frequency] Could not search artist artwork:", item.name, error);
+          console.warn(
+            "[Same Frequency] Could not search artist artwork:",
+            item.name,
+            error,
+          );
         }
       }
 
@@ -689,10 +924,7 @@
     }
 
     const [mine, theirs] = await withTimeout(
-      Promise.all([
-        getMine(onStatus),
-        collect(friendId, "their", onStatus),
-      ]),
+      Promise.all([getMine(onStatus), collect(friendId, "their", onStatus)]),
       TOTAL_TIMEOUT,
       "the playlist comparison",
     );
@@ -701,10 +933,9 @@
     const a = overlap(mine.artists, theirs.artists);
     const relatedTrackImages = new Map();
     for (const track of t.shared) {
-      const images = [
-        ...(track.imageUrls || []),
-        track.imageUrl,
-      ].filter(Boolean);
+      const images = [...(track.imageUrls || []), track.imageUrl].filter(
+        Boolean,
+      );
       for (const artistKey of track.artistKeys || []) {
         const existing = relatedTrackImages.get(artistKey) || [];
         relatedTrackImages.set(
@@ -746,7 +977,8 @@
     }
     await loadArtistImages(sharedArtistCards.slice(0, 5));
     for (const artist of sharedArtistCards) {
-      artist.imageUrl = artist.imageUrl || artistImageCache.get(artist.key) || null;
+      artist.imageUrl =
+        artist.imageUrl || artistImageCache.get(artist.key) || null;
     }
     return {
       score: Math.round((t.percent + a.percent) / 2),
@@ -759,65 +991,175 @@
 
   // ---------- result popup ----------
 
-  function renderResult(box, r) {
-    box.textContent = "";
-    const card = h("section", "vibe-check-result");
+  // One window for the whole flow: it is built up front in a loading state,
+  // then filled in place when the comparison finishes.
+  function buildWindow() {
+    const card = h("section", "vibe-check-result is-loading");
+
+    const titlebar = h("div", "vibe-check-titlebar");
+    titlebar.appendChild(h("span", null, "same_frequency.exe"));
+    const winBtns = h("span", "vibe-check-titlebar-btns");
+    const makeWinBtn = (glyph, label) => {
+      const btn = h("button", "vibe-check-winbtn", glyph);
+      btn.type = "button";
+      btn.setAttribute("aria-label", label);
+      btn.title = label;
+      return btn;
+    };
+    const minBtn = makeWinBtn("_", "Minimize");
+    const maxBtn = makeWinBtn("\u25a1", "Restore");
+    const closeBtn = makeWinBtn("\u00d7", "Close");
+    winBtns.append(minBtn, maxBtn, closeBtn);
+    titlebar.appendChild(winBtns);
+    card.appendChild(titlebar);
+
     const hero = h("div", "vibe-check-hero");
     hero.appendChild(h("div", "vibe-check-kicker", "The overlap"));
+    const sticker = h("div", "vibe-check-sticker", "same freq!");
+    sticker.setAttribute("aria-hidden", "true");
+    hero.appendChild(sticker);
 
     const scoreRow = h("div", "vibe-check-score-row");
-    const score = h("div", "vibe-check-score", r.score + "%");
-    const scoreText = h("div", "vibe-check-score-copy", "overlap across public playlists");
+    const score = h("div", "vibe-check-score", "??%");
+    const scoreText = h(
+      "div",
+      "vibe-check-score-copy",
+      "overlap across public playlists",
+    );
     scoreRow.append(score, scoreText);
     hero.appendChild(scoreRow);
 
-    const summary = h(
-      "div",
-      "vibe-check-summary",
-      r.sharedTracks.length +
-        " tracks and " +
-        r.sharedArtists.length +
-        " artists in common",
-    );
-    hero.appendChild(summary);
-    card.appendChild(hero);
+    const meter = h("div", "vibe-check-meter");
+    meter.setAttribute("role", "progressbar");
+    meter.setAttribute("aria-label", "Playlist overlap");
+    meter.setAttribute("aria-valuemin", "0");
+    meter.setAttribute("aria-valuemax", "100");
+    const meterFill = h("div", "vibe-check-meter-fill");
+    meter.appendChild(meterFill);
+    hero.appendChild(meter);
 
-    const scoreNote = h(
+    const status = h("div", "vibe-check-status");
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    status.setAttribute("aria-busy", "true");
+    const loader = h("span", "vibe-check-loader");
+    const statusMessage = h("span", null, "Checking public playlists...");
+    status.append(loader, statusMessage);
+    hero.appendChild(status);
+
+    const note = h(
       "div",
       "vibe-check-score-note",
-      "A rough count from public playlists only — not a rating of either person’s taste.",
+      "A little look at the artists and tracks you both keep around. Public playlists only.",
     );
-    card.appendChild(scoreNote);
+    hero.appendChild(note);
+    card.appendChild(hero);
 
     const lists = h("div", "vibe-check-lists");
+    card.appendChild(lists);
+
+    return {
+      card,
+      titlebar,
+      minBtn,
+      maxBtn,
+      closeBtn,
+      score,
+      meter,
+      meterFill,
+      status,
+      loader,
+      statusMessage,
+      note,
+      lists,
+    };
+  }
+
+  // title-bar buttons: _ rolls the window up, \u25a1 restores it, \u00d7 closes the popup
+  function wireTitlebar(win, onClose) {
+    const setCollapsed = (on) => {
+      win.card.classList.toggle("is-collapsed", on);
+      win.minBtn.setAttribute("aria-pressed", String(on));
+    };
+    const toggle = () =>
+      setCollapsed(!win.card.classList.contains("is-collapsed"));
+    win.minBtn.addEventListener("click", toggle);
+    win.maxBtn.addEventListener("click", () => setCollapsed(false));
+    win.titlebar.addEventListener("dblclick", toggle);
+    win.closeBtn.addEventListener("click", onClose);
+  }
+
+  // Spotify's own modal header (title + X) is redundant now; hide it once mounted.
+  function hideNativeModalHeader(root) {
+    let tries = 0;
+    const tick = () => {
+      const modal =
+        root.isConnected &&
+        root.closest(
+          '.main-trackCreditsModal-container, .GenericModal, [role="dialog"]',
+        );
+      const header =
+        modal && modal.querySelector(".main-trackCreditsModal-header");
+      if (header) {
+        header.style.display = "none";
+      } else if (++tries < 12) {
+        setTimeout(tick, 50);
+      }
+    };
+    tick();
+  }
+
+  function renderResult(win, r) {
+    win.card.classList.remove("is-loading");
+    win.score.textContent = r.score + "%";
+    const pct = Math.max(0, Math.min(100, r.score));
+    win.meter.setAttribute("aria-valuenow", String(r.score));
+    win.meterFill.style.width = pct + "%";
+    win.status.setAttribute("aria-busy", "false");
+    win.loader.remove();
+    win.statusMessage.textContent =
+      r.sharedTracks.length +
+      " tracks and " +
+      r.sharedArtists.length +
+      " artists in common";
+    win.note.textContent =
+      "A rough count from public playlists only \u2014 not a rating of either person\u2019s taste.";
+
+    const lists = win.lists;
+    lists.textContent = "";
     const addImageCards = (title, items, unavailableMessage) => {
       const section = h("section");
       const heading = h("div", "vibe-check-list-heading");
       heading.append(h("span", null, title));
-      const countText = items === null
-        ? ""
-        : items.length > 5
-          ? "Showing 5 of " + items.length
-          : items.length + (items.length === 1 ? " match" : " matches");
+      const countText =
+        items === null
+          ? ""
+          : items.length > 5
+            ? "Showing 5 of " + items.length
+            : items.length + (items.length === 1 ? " match" : " matches");
       heading.appendChild(h("span", "vibe-check-count", countText));
       section.appendChild(heading);
 
       if (items === null) {
         section.appendChild(h("div", "vibe-check-empty", unavailableMessage));
       } else if (!items.length) {
-        section.appendChild(h("div", "vibe-check-empty", "Nothing shared here this time."));
+        section.appendChild(
+          h("div", "vibe-check-empty", "Nothing shared here this time."),
+        );
       } else {
         const grid = h("div", "vibe-check-card-grid");
         for (const item of items.slice(0, 5)) {
           const card = h("div", "vibe-check-media-card");
           const imageUrls = Array.from(
-            new Set([
-              ...(item.relatedTrackImageUrls || []),
-              ...(item.imageUrls || []),
-              item.imageUrl,
-              ...(item.fallbackImageUrls || []),
-              item.fallbackImageUrl,
-            ].filter(Boolean)),
+            new Set(
+              [
+                ...(item.relatedTrackImageUrls || []),
+                ...(item.imageUrls || []),
+                item.imageUrl,
+                ...(item.fallbackImageUrls || []),
+                item.fallbackImageUrl,
+              ].filter(Boolean),
+            ),
           );
           if (imageUrls.length) {
             const image = h("img", "vibe-check-media-image");
@@ -863,49 +1205,34 @@
     };
     addImageCards("Artists in both playlists", r.sharedArtists);
     addImageCards("Tracks in both playlists", r.sharedTracks);
-    card.appendChild(lists);
-    box.appendChild(card);
   }
 
   async function openVibeCheck(friendId) {
     addStyles();
     const root = h("div");
     root.className = "vibe-check-root";
-    const intro = h("div", "vibe-check-intro");
-    const introTitle = h("div", "vibe-check-intro-title", "Same Frequency");
-    const introCopy = h(
-      "div",
-      "vibe-check-intro-copy",
-      "A little look at the artists and tracks you both keep around. Public playlists only.",
-    );
-    intro.append(introTitle, introCopy);
-    const status = h("div", "vibe-check-status is-loading");
-    const loader = h("span", "vibe-check-loader");
-    const statusMessage = h("span", null, "Checking public playlists...");
-    status.append(loader, statusMessage);
-    status.setAttribute("role", "status");
-    status.setAttribute("aria-live", "polite");
-    status.setAttribute("aria-busy", "true");
-    const result = h("div", "");
-    root.append(intro, status, result);
+    const win = buildWindow();
+    root.appendChild(win.card);
+    wireTitlebar(win, () => Spicetify.PopupModal.hide());
     Spicetify.PopupModal.display({
       title: "Same Frequency",
       content: root,
       isLarge: true,
     });
+    hideNativeModalHeader(root);
 
     try {
       const r = await compare(friendId, (m) => {
-        statusMessage.textContent = m;
+        win.statusMessage.textContent = m;
       });
-      status.remove();
-      renderResult(result, r);
+      renderResult(win, r);
     } catch (e) {
-      status.classList.remove("is-loading");
-      status.classList.add("is-error");
-      status.setAttribute("aria-busy", "false");
-      statusMessage.textContent =
-        (e && e.message) || "Couldn’t load the playlists. Try again in a bit.";
+      win.card.classList.remove("is-loading");
+      win.card.classList.add("is-error");
+      win.status.setAttribute("aria-busy", "false");
+      win.statusMessage.textContent =
+        (e && e.message) ||
+        "Couldn\u2019t load the playlists. Try again in a bit.";
     }
   }
 
@@ -920,7 +1247,7 @@
   function makeButton(friendId, floating) {
     const b = h("button", "vibe-check-button", "compare our playlists");
     b.style.cssText = floating
-      ? "position:fixed;right:24px;bottom:112px;z-index:1000;padding:10px 17px;box-shadow:0 8px 24px rgba(0,0,0,.35);"
+      ? "position:fixed;right:24px;bottom:112px;z-index:1000;padding:10px 17px;box-shadow:0 2px 0 #0b6f93,4px 5px 0 #ff4fd8;"
       : "margin-left:16px;flex:none;padding:7px 15px;";
     b.id = BTN_ID;
     b.dataset.user = friendId;
