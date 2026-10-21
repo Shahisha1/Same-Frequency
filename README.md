@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="preview.png" width="540" alt="Same Frequency logo" />
+<img src="preview.svg" width="540" alt="Same Frequency logo" />
 
 ### How in sync are your playlists?
 
